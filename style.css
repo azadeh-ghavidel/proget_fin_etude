@@ -1,0 +1,149 @@
+body,
+li,
+ul,
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: #fff;
+}
+div.search {
+  background-color: #eee;
+  min-height: 40px;
+  margin: 10px;
+  display: flex;
+}
+div.search .logoType {
+  width: 180px;
+  font-size: 12px;
+  background-color: #fff;
+  line-height: 3.5;
+  font-weight: bold;
+  text-align: center;
+}
+div.search input {
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background: none;
+  padding: 0 10px;
+  width: 100%;
+}
+div.search button:hover {
+  background-color: #164081;
+}
+div.search button {
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  background: #2557a7;
+  color: #fff;
+  padding: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.search-list {
+  margin: 10px;
+}
+.search-list .item {
+  background-color: #fff;
+  border: 1px solid #d4d2d0;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+.search-list .item:hover {
+  border: 1px solid #164081;
+}
+.search-list .item h1 {
+  font-size: 17px;
+}
+.search-list .item > p {
+  font-size: 13px;
+  color: #666;
+  padding: 20px;
+}
+.search-list .item ._more {
+  display: flex;
+  border-top: 1px solid #eee;
+}
+.search-list .item ._more .link {
+  padding-top: 5px;
+}
+.search-list .item ._more a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  background-color: #2557a7;
+  padding: 8px 10px;
+  border-radius: 5px;
+  width: max-content;
+}
+.search-list .item ._more a:hover {
+  background-color: #164081;
+}
+
+.search-list .item ._more .companyname {
+  width: 100%;
+  font-size: 14px;
+  padding: 10px;
+}
+div.popup {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+div.popup div.box {
+  width: 600px;
+  min-height: 100px;
+  border-radius: 5px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  position: relative;
+  max-height: 500px;
+  overflow: auto;
+}
+.popup_close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+div.popup div.box h1 {
+  font-size: 24px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.popup--link{
+  display: inline-block;
+  padding: 5px 20px;
+  border:1px solid #ddd;
+  background:#fff;
+  margin: 5px 0;
+  text-decoration: none;
+}
+.popup--link:hover{
+  border-color: #999;
+}
+.loading{
+  margin: 50px auto;
+}
+.loading svg{
+  width: 200px;
+  margin: 2px auto;
+}

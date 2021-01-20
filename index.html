@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RECOMMANDE MOI</title>
+    <!--Associer un fichier css à mon fichier HTML-->
+    <link rel="stylesheet" href="style.css?v=1.0.2" />
+  </head>
+  <body>
+
+      <!--Création une balise <div> afin de récupérer le texte saisi par utilisateur-->
+    <div class="search">
+      <div class="logoType">Recommande moi :</div>
+      <!--Une balise <input> à remplir par internaute-->
+      <input placeholder="Mon metier préféré ..." type="text" id="mots" name="mots" />
+      <!--Une balise <button> pour commencer la recherche en utilisant JavaScript dès que internaute clique sur ça.-->
+      <button onclick="javascript:search()">Recherche</button>
+    </div>
+
+    <!--Création une balise <div> pour montrer les métiers prédits par la machine -->
+    <div id="search-list" class="search-list"></div>
+
+    <!--Création une division afin de montrer la description de métier sélectionné par utilisateur -->
+    <!--Elle va apparaître dès qu’internaute clique sur le bouton « Plus d’infos »-->
+    <div id="popup" class="popup">
+      <div class="box">
+        <div onclick="javascript:popup_close()" class="popup_close">X</div>
+        <h1 id="popup_title"></h1>
+        <p id="popup_description"></p>
+        <div id="popup_link" class="link"></div>
+      </div>
+    </div>
+  </body>
+</html>
+<!--JAVASCRIPT-->
+<script type="text/javascript">
+  //Création une fonctionne search afin de récuperer les mots saisis par utilisateur à l'aide du méthode getElementById
+  function search() {
+    var mots = document.getElementById("mots").value;
+    //J'ai mis un image svg pour montrer aux utilisateur pandant le proces de prédiction
+    document.getElementById("search-list").innerHTML =
+      `
+      <center class="loading">
+        <svg id="_x31_px" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m17 22c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm0-9c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4z"/><path d="m23.5 24c-.128 0-.256-.049-.354-.146l-3.068-3.068c-.195-.195-.195-.512 0-.707s.512-.195.707 0l3.068 3.068c.195.195.195.512 0 .707-.097.097-.225.146-.353.146z"/><path d="m18.5 8h-15c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5h15c1.93 0 3.5 1.57 3.5 3.5s-1.57 3.5-3.5 3.5zm-15-6c-1.379 0-2.5 1.121-2.5 2.5s1.121 2.5 2.5 2.5h15c1.379 0 2.5-1.121 2.5-2.5s-1.121-2.5-2.5-2.5z"/><path d="m4.5 6c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/><path d="m9.5 6c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/><path d="m10.5 14h-7c-1.93 0-3.5-1.57-3.5-3.5 0-.934.364-1.812 1.026-2.474s1.54-1.026 2.474-1.026h15c1.93 0 3.5 1.57 3.5 3.5 0 .191-.013.382-.049.573-.051.272-.316.448-.584.398-.271-.051-.45-.313-.398-.584.024-.128.031-.258.031-.387 0-1.379-1.121-2.5-2.5-2.5h-15c-.666 0-1.294.261-1.767.733s-.733 1.101-.733 1.767c0 1.379 1.121 2.5 2.5 2.5h7c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m4.5 12c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/><path d="m9.5 12c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/><path d="m10.5 20h-7c-1.93 0-3.5-1.57-3.5-3.5 0-.934.364-1.812 1.026-2.474s1.54-1.026 2.474-1.026h7c.276 0 .5.224.5.5s-.224.5-.5.5h-7c-.666 0-1.294.261-1.767.733s-.733 1.101-.733 1.767c0 1.379 1.121 2.5 2.5 2.5h7c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m4.5 18c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/><path d="m9.5 18c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5zm0-2c-.275 0-.5.225-.5.5s.225.5.5.5.5-.225.5-.5-.225-.5-.5-.5z"/></svg>
+        <h2>On vous trouvera les meilleurs jobs ...</h2>
+      </center>
+      `;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var dataresponse = JSON.parse(this.responseText);
+
+        var _list = "";
+        dataresponse.forEach(function (obj) {
+            //Pour chaque annonce (obj) une bloque "division" sera ajouter à la liste _list pour que je puisse avoir tous les annonce ensemble dans ma page.
+            //J'ai défini id de chaque obj comme id de sa balise pour que je puisse l'utiliser dans la partie de description en les utilisant comme un parametre
+            //Par exemple id de balise title (h1) pour premier annonce(obj) sera "$1_title" ...
+            //J'ai aussi appeler une fonctionne replaceAllBackSlash pour chaque element d'annonce afin de réduire le "\\" qui a été produit au moment de les récuperer de fichier python
+          _list += `<div class="item">
+        <h1 id="${obj.id}_title">${replaceAllBackSlash(obj.metier)}</h1>
+        <p id="${obj.id}_description" style="display: none">
+          ${replaceAllBackSlash(obj.description)}
+        </p>
+	<p id="${obj.id}_summary">
+          ${replaceAllBackSlash(obj.sommaire)}
+        </p>
+        <!--Details d'annonces : j'ai pris tous les dérails de chaque annonce une fois ici pour éviter de réenvoyer un requêt pour les prendres après-->
+        <!--Donc je peux diminuer le temps d'attent d'utilisateurs au moment de cliquer sur le butonn (Plus d'infos)-->
+        <div id="${obj.id}_link" style="display:none">${replaceAllBackSlash(obj.lien)}</div>
+        <div class="_more">
+          <div class="companyname">${replaceAllBackSlash(obj.entreprise)}</div>
+          <div class="link">
+            <!--J'ai appeler la fonctionne more afin de récuperer la description d'annonce-->
+            <a href='javascript:more(${obj.id})'>Plus d'infos</a>
+          </div>
+        </div>
+      </div>`;
+        });
+
+        document.getElementById("mots").value = "";
+        document.getElementById("search-list").innerHTML = _list;
+      }
+    };
+    //Envoyer le texte saisi par utilisateur au fichier prédiction.py
+    xhttp.open("GET", "http://172.28.100.229:5001?mots=" + mots, true);
+    xhttp.send();
+  }
+
+  function more(id) {
+    //style de division de la partie de chaque description sera comme un bloque
+    document.getElementById("popup").style.display = "block";
+    //Recuperer le titre de metier
+    document.getElementById("popup_title").innerHTML = document.getElementById(id+"_title").textContent;
+    //Recuperer la description de metier
+    //replace(/\./g, "<br>") va remplacer tous les "." avec un balise <br> dans la description
+    document.getElementById("popup_description").innerHTML = document.getElementById(id+"_description").textContent.replace(/\./g, "<br>");;
+    //Recuperer le lien de metier
+    var _link = document.getElementById(id+"_link").textContent;
+    document.getElementById("popup_link").innerHTML = `<a target="_blank" class="popup--link" href="${_link}"> Lien vers l'annonce </a>`;
+    
+  }
+  //La fonctionne popup_close est pour mettre en hidden le balise popup
+  function popup_close() {
+    document.getElementById("popup").style.display = "none";
+  }
+  //La fonctionne replaceAllBackSlash est pour réduire le "\\" qui a été produit au moment de les récuperer de fichier python dans les corpus de chaque metier
+  function replaceAllBackSlash(targetStr) {
+    var index = targetStr.indexOf("\\");
+    while (index >= 0) {
+      targetStr = targetStr.replace("\\", "");
+      index = targetStr.indexOf("\\");
+    }
+    return targetStr;
+  }
+</script>
